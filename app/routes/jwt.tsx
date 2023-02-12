@@ -1,7 +1,8 @@
 import type { ActionArgs} from "@remix-run/node";
 import { json } from "@remix-run/node"
 import { Form, useActionData } from "@remix-run/react"
-import * as jwt from 'jsonwebtoken'
+
+import decodeJWT from '~/decodeJWT.server'
 
 export async function action ({ request }: ActionArgs) {
   const formData = await request.formData()
@@ -11,7 +12,7 @@ export async function action ({ request }: ActionArgs) {
     throw new Error('no string')
   }
 
-  const payload = jwt.decode(token)
+  const payload = decodeJWT(token)
 
   return json({
     payload
